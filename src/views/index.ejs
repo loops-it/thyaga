@@ -197,7 +197,7 @@
 
     .closeButton {
       background-color: transparent;
-      border: solid 1px #fff;
+      border: none;
       border-radius: 100%;
       font-size: 16px;
       line-height: 16px;
@@ -260,14 +260,34 @@
     #questionButtons button {
       margin-bottom: 10px;
     }
+
+    .chatDetails p{
+      color: #fff;
+      font-weight: 600;
+      font-size: 18px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .chatDetails span{
+      color: #fff;
+      font-weight: 300;
+      font-size: 11px;
+      font-family: "Poppins", sans-serif;
+    }
   </style>
 </head>
 
 <body class="background">
   <div class="container shadow-lg my-0 p-0">
     <div class="d-flex chat-header w-100 py-2 text-center justify-content-between align-items-center">
-      <img src="/agent.png" alt="" class="px-3 py-2" style="height: 50px; width: auto">
-      <!-- <button class="closeButton"><i class="bi bi-x-lg"></i></button> -->
+      <div class="d-flex flex-row">
+        <img src="/agent.png" alt="" class="ps-3 pe-2 py-1" style="height: 60px; width: auto">
+        <div class="d-flex flex-column chatDetails align-items-start justify-content-center">
+          <p class="mb-0">Bot</p>
+          <span class="mb-0">Online</span>
+        </div>
+      </div>
+      <button class="closeButton"><i class="bi bi-x-lg"></i></button>
     </div>
 
     <div class="d-flex chat-container">
@@ -278,12 +298,12 @@
         <div class="bot-message">
           <img class="message-image" src="/agent.png">
           <div>
-            <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid">
-            <p class="mb-2">Hello, Welcome to Thyaga. Please select the language to get started.</p>
-            <p class="mb-2">ආයුබෝවන්, Thyaga වෙත ඔබව සාදරයෙන් පිළිගනිමු. කරුණාකර ආරම්භ කිරීමට භාෂාව තෝරන්න.</p>
-            <p class="mb-2">வணக்கம், Thyaga வரவேற்கிறோம். தொடங்குவதற்கு மொழியைத் தேர்ந்தெடுக்கவும்.</p>
+            <!-- <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid"> -->
+            <p class="mb-2">Hi, How can I help you today!</p>
+            <!-- <p class="mb-2">ආයුබෝවන්, Thyaga වෙත ඔබව සාදරයෙන් පිළිගනිමු. කරුණාකර ආරම්භ කිරීමට භාෂාව තෝරන්න.</p> -->
+            <!-- <p class="mb-2">வணக்கம், Thyaga வரவேற்கிறோம். தொடங்குவதற்கு மொழியைத் தேர்ந்தெடுக்கவும்.</p> -->
             
-            <span class="d-flex flex-row language-buttons w-100 p-0 m-0">
+            <!-- <span class="d-flex flex-row language-buttons w-100 p-0 m-0">
               <span class="col-4 pe-1">
                 <button id="changeToEnglishButton">English</button>
               </span>
@@ -293,10 +313,10 @@
               <span class="col-4">
                 <button id="changeToTamilButton">Tamil</button>
               </span>
-            </span><br>
-            <span id="questionButtons" class="d-flex flex-column language-buttons w-100 p-0 m-0">
+            </span><br> -->
+            <!-- <span id="questionButtons" class="d-flex flex-column language-buttons w-100 p-0 m-0">
 
-            </span>
+            </span> -->
           </div>
         </div>
       </div>
