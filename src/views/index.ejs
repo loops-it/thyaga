@@ -36,24 +36,28 @@
       padding: 10px;
       border-radius: 5px;
       margin-bottom: 10px;
-      color: #000;
+      color: #595E62;
       display: flex;
       align-items: end;
       font-family: "Poppins", sans-serif;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: row;
       justify-content: start;
       align-items: start;
     }
 
-    .bot-message div {
-      border: solid 1px #3d3d3d;
-      border-radius: 30px;
+    .bot-message .messageWrapper div {
+      border: none;
+      border-radius: 8px;
       max-width: 100%;
       width: max-content;
       padding: 10px;
-      border-bottom-left-radius: 0px;
+      border-top-left-radius: 0px;
       font-size: 12px;
+      background-color: #F4F9FF;
+      display: flex;
+      flex-direction: column;
+      /* box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); */
     }
 
     .user-message {
@@ -101,8 +105,8 @@
     }
 
     .message-image {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       margin-right: 10px;
       margin-top: 10px;
       border-radius: 50%;
@@ -261,6 +265,8 @@
       margin-bottom: 10px;
     }
 
+    
+
     .chatDetails p{
       color: #fff;
       font-weight: 600;
@@ -273,6 +279,25 @@
       font-weight: 300;
       font-size: 11px;
       font-family: "Poppins", sans-serif;
+    }
+
+    .botname-message{
+      color: #BFBFBF;
+      font-weight: 400;
+      font-size: 11px;
+      font-family: "Poppins", sans-serif;
+    }
+
+    .quickQuestionButton{
+      background-color: #1C73D4;
+      border-radius: 10px;
+      border: none;
+      color: #fff;
+      font-weight: 400;
+      font-size: 12px;
+      font-family: "Poppins", sans-serif;
+      padding: 8px;
+      text-align: start;
     }
   </style>
 </head>
@@ -297,9 +322,13 @@
         </div>
         <div class="bot-message">
           <img class="message-image" src="/agent.png">
-          <div>
+          
+          <div class="messageWrapper">
+            <span class="botname-message">ChatBot</span>
             <!-- <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid"> -->
-            <p class="mb-2">Hi, How can I help you today!</p>
+            <div>
+              <p class="mb-2">Hi, How can I help you today!</p>
+            </div>
             <!-- <p class="mb-2">ආයුබෝවන්, Thyaga වෙත ඔබව සාදරයෙන් පිළිගනිමු. කරුණාකර ආරම්භ කිරීමට භාෂාව තෝරන්න.</p> -->
             <!-- <p class="mb-2">வணக்கம், Thyaga வரவேற்கிறோம். தொடங்குவதற்கு மொழியைத் தேர்ந்தெடுக்கவும்.</p> -->
             
@@ -314,9 +343,19 @@
                 <button id="changeToTamilButton">Tamil</button>
               </span>
             </span><br> -->
-            <!-- <span id="questionButtons" class="d-flex flex-column language-buttons w-100 p-0 m-0">
+          </div>
+        </div>
+        <div class="bot-message">
+          <img class="message-image" src="/agent.png">
+          
+          <div class="messageWrapper">
+            <span class="botname-message">ChatBot</span>
+            <div>
+              <p class="mb-3">Here's few ways to start with us.</p>
+            </div>
+            <span id="questionButtons" class="d-flex flex-column w-100 p-0 m-0 mt-2">
 
-            </span> -->
+            </span>
           </div>
         </div>
       </div>
@@ -345,7 +384,7 @@ function generateQuestionButtons() {
   questions.forEach((q, index) => {
     const button = document.createElement('button');
     button.textContent = q.question;
-    button.classList.add('btn', 'btn-primary', 'my-1');
+    button.classList.add('quickQuestionButton', 'my-1');
     button.addEventListener('click', () => {
       appendMessageToResponse('user', q.question);
       displayAnswer(q.answer);
