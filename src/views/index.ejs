@@ -311,39 +311,64 @@
   <script>
 
 function generateQuestionButtons() {
-      const questionButtonsDiv = document.getElementById('questionButtons');
-      const questions = [
-        { question: 'What is Thyaga?', answer: 'Thyaga is a platform based in Sri Lanka, that offers a diverse range of gift vouchers, allowing recipients the freedom to choose from a wide selection of brands and merchants.' },
-        { question: 'How can I purchase the Thyaga voucher? ', answer: 'You can purchase Thyaga vouchers directly through their website. Simply visit the website, choose the voucher amount, and follow the instructions to complete the purchase. Step 1 - Click on buy voucher link and select the preferred theme Step 2 - Enter the voucher amountStep 3- Add the receivers information and write your personalised message Step 4- You can select one or more gifting options and confirm the payment.' },
-        { question: 'Are there any alternative methods for purchasing Thyaga vouchers other than through the website?', answer: 'Yes, you can call our hotline at +94 750 100 500 or email us at info@thyaga.lk to place the order.' },
-        { question: 'Does Thyaga offer a pick-up option? If yes, where is the pick-up location?', answer: 'Yes, You can pick up orders from Thyaga office located at 2A, Sulieman Terrace, Colombo 05. ' },
-        { question: 'What are the different ways I can send a Thyaga voucher?', answer: 'You can send Thyaga vouchers via SMS, email, or as physical vouchers (pick up from the Thyaga office or receive via courier).' }
-
-
-        // Add more questions as needed
-      ];
-
-      questions.forEach((q, index) => {
-        const button = document.createElement('button');
-        button.textContent = q.question;
-        button.classList.add('btn', 'btn-primary', 'my-1');
-        button.addEventListener('click', () => displayAnswer(q.answer));
-        questionButtonsDiv.appendChild(button);
-      });
-    }
-
-   
-    function displayAnswer(answer) {
-      appendMessageToResponse('bot', answer);
-    }
-
+  const questionButtonsDiv = document.getElementById('questionButtons');
+  const questions = [
+    { question: 'What is Thyaga?', answer: 'Thyaga is a platform based in Sri Lanka, that offers a diverse range of gift vouchers, allowing recipients the freedom to choose from a wide selection of brands and merchants.' },
+    { question: 'How can I purchase the Thyaga voucher? ', answer: 'You can purchase Thyaga vouchers directly through their website. Simply visit the website, choose the voucher amount, and follow the instructions to complete the purchase. Step 1 - Click on buy voucher link and select the preferred theme Step 2 - Enter the voucher amountStep 3- Add the receivers information and write your personalised message Step 4- You can select one or more gifting options and confirm the payment.' },
+    { question: 'Are there any alternative methods for purchasing Thyaga vouchers other than through the website?', answer: 'Yes, you can call our hotline at +94 750 100 500 or email us at info@thyaga.lk to place the order.' },
+    { question: 'Does Thyaga offer a pick-up option? If yes, where is the pick-up location?', answer: 'Yes, You can pick up orders from Thyaga office located at 2A, Sulieman Terrace, Colombo 05. ' },
+    { question: 'What are the different ways I can send a Thyaga voucher?', answer: 'You can send Thyaga vouchers via SMS, email, or as physical vouchers (pick up from the Thyaga office or receive via courier).' }
     
-    function appendMessageToResponse(role, content) {
-    
-    }
+  ];
 
-    
-    generateQuestionButtons();
+  questions.forEach((q, index) => {
+    const button = document.createElement('button');
+    button.textContent = q.question;
+    button.classList.add('btn', 'btn-primary', 'my-1');
+    button.addEventListener('click', () => {
+      appendMessageToResponse('user', q.question);
+      displayAnswer(q.answer);
+    });
+    questionButtonsDiv.appendChild(button);
+  });
+}
+
+function displayAnswer(answer) {
+  appendMessageToResponse('bot', answer);
+}
+
+function appendMessageToResponse(role, content) {
+  const responseDiv = document.getElementById("response");
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
+
+ 
+  const image = document.createElement("img");
+  image.classList.add("message-image");
+  image.src = role === 'user' ? "/user.webp" : "/chat-header.webp"; 
+
+  
+  const listRegex = /^\d+\.\s.*$/gm;
+  const isList = listRegex.test(content);
+
+  
+  if (isList) {
+    const listItems = content.split('\n').map(item => {
+      return `<li style="margin-bottom: 10px !important;">${item}</li>`;
+    }).join('');
+    messageDiv.innerHTML = `<div><ul style="list-style: none; padding: 0px !important">${listItems}</ul></div>`;
+  } else {
+    messageDiv.innerHTML = `<div>${content}</div>`;
+  }
+  messageDiv.prepend(image);
+
+  responseDiv.appendChild(messageDiv);
+  
+  responseDiv.scrollTop = responseDiv.scrollHeight;
+}
+
+generateQuestionButtons();
+
 
 
     // Initialize the chat history variable
