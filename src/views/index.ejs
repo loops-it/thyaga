@@ -28,8 +28,8 @@
       position: absolute;
       bottom: 10px;
       right: 10px;
-      border: solid 1px #333;
-      border-radius: 30px;
+      border: none;
+      border-radius: 8px;
     }
 
     .bot-message {
@@ -73,7 +73,7 @@
     }
 
     .user-message div {
-      border: solid 1px #3d3d3d;
+      border: none;
       border-radius: 30px;
       max-width: 90%;
       width: max-content;
@@ -81,6 +81,7 @@
       border-bottom-right-radius: 0px;
       margin-right: 10px;
       font-size: 12px;
+      background-color: #F4F9FF;
     }
 
     .background {
@@ -131,9 +132,9 @@
     }
 
     .chat-header {
-      background-color: #303030;
-      border-top-left-radius: 30px;
-      border-top-right-radius: 30px;
+      background-color: #1C73D4;
+      border-top-left-radius: 8px;
+      border-top-right-radius: 8px;
     }
 
     .chat-container {
@@ -176,7 +177,7 @@
         margin: 10px;
         position: relative !important;
         border: solid 1px #333;
-        border-radius: 30px;
+        border-radius: 8px;
         height: 98vh;
       }
 
@@ -263,9 +264,9 @@
 </head>
 
 <body class="background">
-  <div class="container my-0 p-0">
+  <div class="container shadow-lg my-0 p-0">
     <div class="d-flex chat-header w-100 py-2 text-center justify-content-between align-items-center">
-      <img src="../thyaga-logo.png" alt="" class="px-3 py-2" style="height: 50px; width: auto">
+      <img src="/agent.png" alt="" class="px-3 py-2" style="height: 50px; width: auto">
       <!-- <button class="closeButton"><i class="bi bi-x-lg"></i></button> -->
     </div>
 
@@ -275,7 +276,7 @@
           <!-- <img src="../chat-logo.webp" alt="" class="px-3 py-2 mb-3"> -->
         </div>
         <div class="bot-message">
-          <img class="message-image" src="/chat-header.webp">
+          <img class="message-image" src="/agent.png">
           <div>
             <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid">
             <p class="mb-2">Hello, Welcome to Thyaga. Please select the language to get started.</p>
@@ -345,7 +346,7 @@ function appendMessageToResponse(role, content) {
  
   const image = document.createElement("img");
   image.classList.add("message-image");
-  image.src = role === 'user' ? "/user.webp" : "/chat-header.webp"; 
+  image.src = role === 'user' ? "/user.webp" : "/agent.png"; 
 
   
   const listRegex = /^\d+\.\s.*$/gm;
@@ -420,7 +421,7 @@ generateQuestionButtons();
       // Create an image element for the message
       const image = document.createElement("img");
       image.classList.add("message-image");
-      image.src = role === 'user' ? "/user.webp" : "/chat-header.webp"; // Replace with actual image URLs
+      image.src = role === 'user' ? "/user.webp" : "/agent.png"; // Replace with actual image URLs
 
       // Use innerHTML to allow HTML formatting in the message
       // Check if the content is a list
@@ -547,7 +548,7 @@ generateQuestionButtons();
       // Create an image element for the message
       const image = document.createElement("img");
       image.classList.add("message-image");
-      image.src = "/chat-header.webp"; // Replace with actual bot image URL
+      image.src = "/agent.png"; // Replace with actual bot image URL
 
       // Use innerHTML to allow HTML formatting in the message
       messageDiv.innerHTML = `<div>${content}</div>`;
