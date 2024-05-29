@@ -93,23 +93,26 @@
     }
 
     #response {
-  width: 100%;
-  padding: 0px;
-  background-color: #fff;
-  border-radius: 25px;
-  height: 450px;
-  overflow: auto;
-  position: relative;
-  font-family: "Poppins", sans-serif;
-  font-size: 12px;
+      width: 100%;
+      padding: 0px;
+      background-color: #fff;
+      border-radius: 25px;
+      height: 450px;
+      overflow: auto;
+      position: relative;
+      font-family: "Poppins", sans-serif;
+      font-size: 12px;
 
-  /* Hide scrollbar for WebKit browsers */
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none;  /* Internet Explorer 10+ */
-}
-#response::-webkit-scrollbar {
-  display: none; /* Safari and Chrome */
-}
+      /* Hide scrollbar for WebKit browsers */
+      scrollbar-width: none;
+      /* Firefox */
+      -ms-overflow-style: none;
+      /* Internet Explorer 10+ */
+    }
+
+    #response::-webkit-scrollbar {
+      display: none;
+    }
 
     .message-image {
       width: 30px;
@@ -259,7 +262,8 @@
       font-size: 25px;
       padding: 5px !important;
     }
-    .error-message{
+
+    .error-message {
       background-color: #2a0e459c;
       color: #fff;
       padding: 10px;
@@ -272,30 +276,30 @@
       margin-bottom: 10px;
     }
 
-    
 
-    .chatDetails p{
+
+    .chatDetails p {
       color: #fff;
       font-weight: 600;
       font-size: 18px;
       font-family: "Poppins", sans-serif;
     }
 
-    .chatDetails span{
+    .chatDetails span {
       color: #fff;
       font-weight: 300;
       font-size: 11px;
       font-family: "Poppins", sans-serif;
     }
 
-    .botname-message{
+    .botname-message {
       color: #BFBFBF;
       font-weight: 400;
       font-size: 11px;
       font-family: "Poppins", sans-serif;
     }
 
-    .quickQuestionButton{
+    .quickQuestionButton {
       background-color: #1C73D4;
       border-radius: 10px;
       border: none;
@@ -329,7 +333,7 @@
         </div>
         <div class="bot-message">
           <img class="message-image" src="/agent.png">
-          
+
           <div class="messageWrapper">
             <span class="botname-message">ChatBot</span>
             <!-- <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid"> -->
@@ -338,7 +342,7 @@
             </div>
             <!-- <p class="mb-2">ආයුබෝවන්, Thyaga වෙත ඔබව සාදරයෙන් පිළිගනිමු. කරුණාකර ආරම්භ කිරීමට භාෂාව තෝරන්න.</p> -->
             <!-- <p class="mb-2">வணக்கம், Thyaga வரவேற்கிறோம். தொடங்குவதற்கு மொழியைத் தேர்ந்தெடுக்கவும்.</p> -->
-            
+
             <!-- <span class="d-flex flex-row language-buttons w-100 p-0 m-0">
               <span class="col-4 pe-1">
                 <button id="changeToEnglishButton">English</button>
@@ -354,7 +358,7 @@
         </div>
         <div class="bot-message">
           <img class="message-image" src="/agent.png">
-          
+
           <div class="messageWrapper">
             <span class="botname-message">ChatBot</span>
             <div>
@@ -377,64 +381,64 @@
 
   <script>
 
-function generateQuestionButtons() {
-  const questionButtonsDiv = document.getElementById('questionButtons');
-  const questions = [
-    { question: 'What is Thyaga?', answer: 'Thyaga is a platform based in Sri Lanka, that offers a diverse range of gift vouchers, allowing recipients the freedom to choose from a wide selection of brands and merchants.' },
-    { question: 'How can I purchase the Thyaga voucher? ', answer: 'You can purchase Thyaga vouchers directly through their website. Simply visit the website, choose the voucher amount, and follow the instructions to complete the purchase. Step 1 - Click on buy voucher link and select the preferred theme Step 2 - Enter the voucher amountStep 3- Add the receivers information and write your personalised message Step 4- You can select one or more gifting options and confirm the payment.' },
-    { question: 'Are there any alternative methods for purchasing Thyaga vouchers other than through the website?', answer: 'Yes, you can call our hotline at +94 750 100 500 or email us at info@thyaga.lk to place the order.' },
-    { question: 'Does Thyaga offer a pick-up option? If yes, where is the pick-up location?', answer: 'Yes, You can pick up orders from Thyaga office located at 2A, Sulieman Terrace, Colombo 05. ' },
-    { question: 'What are the different ways I can send a Thyaga voucher?', answer: 'You can send Thyaga vouchers via SMS, email, or as physical vouchers (pick up from the Thyaga office or receive via courier).' }
-    
-  ];
+    function generateQuestionButtons() {
+      const questionButtonsDiv = document.getElementById('questionButtons');
+      const questions = [
+        { question: 'What is Thyaga?', answer: 'Thyaga is a platform based in Sri Lanka, that offers a diverse range of gift vouchers, allowing recipients the freedom to choose from a wide selection of brands and merchants.' },
+        { question: 'How can I purchase the Thyaga voucher? ', answer: 'You can purchase Thyaga vouchers directly through their website. Simply visit the website, choose the voucher amount, and follow the instructions to complete the purchase. Step 1 - Click on buy voucher link and select the preferred theme Step 2 - Enter the voucher amountStep 3- Add the receivers information and write your personalised message Step 4- You can select one or more gifting options and confirm the payment.' },
+        { question: 'Are there any alternative methods for purchasing Thyaga vouchers other than through the website?', answer: 'Yes, you can call our hotline at +94 750 100 500 or email us at info@thyaga.lk to place the order.' },
+        { question: 'Does Thyaga offer a pick-up option? If yes, where is the pick-up location?', answer: 'Yes, You can pick up orders from Thyaga office located at 2A, Sulieman Terrace, Colombo 05. ' },
+        { question: 'What are the different ways I can send a Thyaga voucher?', answer: 'You can send Thyaga vouchers via SMS, email, or as physical vouchers (pick up from the Thyaga office or receive via courier).' }
 
-  questions.forEach((q, index) => {
-    const button = document.createElement('button');
-    button.textContent = q.question;
-    button.classList.add('quickQuestionButton', 'my-1');
-    button.addEventListener('click', () => {
-      appendMessageToResponse('user', q.question);
-      displayAnswer(q.answer);
-    });
-    questionButtonsDiv.appendChild(button);
-  });
-}
+      ];
 
-function displayAnswer(answer) {
-  appendMessageToResponse('bot', answer);
-}
+      questions.forEach((q, index) => {
+        const button = document.createElement('button');
+        button.textContent = q.question;
+        button.classList.add('quickQuestionButton', 'my-1');
+        button.addEventListener('click', () => {
+          appendMessageToResponse('user', q.question);
+          displayAnswer(q.answer);
+        });
+        questionButtonsDiv.appendChild(button);
+      });
+    }
 
-function appendMessageToResponse(role, content) {
-  const responseDiv = document.getElementById("response");
-  const messageDiv = document.createElement("div");
-  messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
+    function displayAnswer(answer) {
+      appendMessageToResponse('bot', answer);
+    }
 
- 
-  const image = document.createElement("img");
-  image.classList.add("message-image");
-  image.src = role === 'user' ? "/user.webp" : "/agent.png"; 
+    function appendMessageToResponse(role, content) {
+      const responseDiv = document.getElementById("response");
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
 
-  
-  const listRegex = /^\d+\.\s.*$/gm;
-  const isList = listRegex.test(content);
 
-  
-  if (isList) {
-    const listItems = content.split('\n').map(item => {
-      return `<li style="margin-bottom: 10px !important;">${item}</li>`;
-    }).join('');
-    messageDiv.innerHTML = `<div><ul style="list-style: none; padding: 0px !important">${listItems}</ul></div>`;
-  } else {
-    messageDiv.innerHTML = `<div>${content}</div>`;
-  }
-  messageDiv.prepend(image);
+      const image = document.createElement("img");
+      image.classList.add("message-image");
+      image.src = role === 'user' ? "/user.webp" : "/agent.png";
 
-  responseDiv.appendChild(messageDiv);
-  
-  responseDiv.scrollTop = responseDiv.scrollHeight;
-}
 
-generateQuestionButtons();
+      const listRegex = /^\d+\.\s.*$/gm;
+      const isList = listRegex.test(content);
+
+
+      if (isList) {
+        const listItems = content.split('\n').map(item => {
+          return `<li style="margin-bottom: 10px !important;">${item}</li>`;
+        }).join('');
+        messageDiv.innerHTML = `<div><ul style="list-style: none; padding: 0px !important">${listItems}</ul></div>`;
+      } else {
+        messageDiv.innerHTML = `<div>${content}</div>`;
+      }
+      messageDiv.prepend(image);
+
+      responseDiv.appendChild(messageDiv);
+
+      responseDiv.scrollTop = responseDiv.scrollHeight;
+    }
+
+    generateQuestionButtons();
 
 
 
