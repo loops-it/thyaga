@@ -97,7 +97,7 @@
       padding: 0px;
       background-color: #fff;
       border-radius: 25px;
-      height: 450px;
+      height: 400px;
       overflow: auto;
       position: relative;
       font-family: "Poppins", sans-serif;
@@ -157,10 +157,11 @@
 
     .chat-input {
       line-height: 30px;
-      border-radius: 30px;
+      border-radius: 0px;
       font-family: "Poppins", sans-serif;
       font-size: 12px;
       padding-right: 45px !important;
+      border: none !important;
     }
 
     .chat-input::placeholder {
@@ -343,7 +344,7 @@
             <span class="botname-message">ChatBot</span>
             <!-- <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid"> -->
             <div>
-              <p class="mb-2">Hi, How can I help you today!</p>
+              <p class="mb-0">Hi, How can I help you today!</p>
             </div>
             <!-- <p class="mb-2">ආයුබෝවන්, Thyaga වෙත ඔබව සාදරයෙන් පිළිගනිමු. කරුණාකර ආරම්භ කිරීමට භාෂාව තෝරන්න.</p> -->
             <!-- <p class="mb-2">வணக்கம், Thyaga வரவேற்கிறோம். தொடங்குவதற்கு மொழியைத் தேர்ந்தெடுக்கவும்.</p> -->
@@ -367,7 +368,7 @@
           <div class="messageWrapper">
             <span class="botname-message">ChatBot</span>
             <div>
-              <p class="mb-3">Here's few ways to start with us.</p>
+              <p class="mb-0">Here's few ways to start with us.</p>
             </div>
             <span id="questionButtons" class="d-flex flex-column w-100 p-0 m-0 mt-2">
 
@@ -376,8 +377,8 @@
         </div>
       </div>
     </div>
-    <form id="questionForm">
-      <input class="form-control chat-input" placeholder="What's your question about?" id="question" name="question"
+    <form id="questionForm" style="border-top: solid 1px #e0e0e0; padding-top: 10px;">
+      <input class="form-control chat-input" placeholder="Write message here..." id="question" name="question"
         required></input>
       <button type="submit" class="btn btn-light btn-lg chat-submit-button"><i class="bi bi-send-fill"></i></button>
     </form>
