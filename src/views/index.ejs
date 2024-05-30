@@ -63,11 +63,9 @@
     .user-message {
       padding: 10px;
       border-radius: 10px;
-      white-space: pre-line;
       margin-bottom: 10px;
       color: #595E62;
       display: flex;
-      flex-direction: row-reverse;
       align-items: end;
       font-family: "Poppins", sans-serif;
       display: flex;
@@ -76,18 +74,32 @@
       align-items: end;
     }
 
-    .user-message div {
+    .user-message .messageWrapper div {
       border: none;
       border-radius: 10px;
-      max-width: 90%;
+      max-width: 250px;
       width: max-content;
-      padding: 10px 20px;
+      padding: 10px;
       border-bottom-right-radius: 0px;
-      margin-right: 10px;
+      margin-right: 0px;
       font-size: 12px;
       background-color: #F4F9FF;
+      display: flex !important;
+      justify-content: end !important;
     }
-
+    /* .user-message div p{
+      width: 100%;
+    } */
+    .user-message .messageWrapper{
+      padding-right: 10px;
+      text-align: end;
+      align-self: end !important;
+    }
+    .user-message .messageWrapper .botname-message{
+      padding-right: 10px;
+      text-align: end;
+      align-self: end !important;
+    }
     .background {
       background: transparent;
     }
@@ -346,7 +358,9 @@
   <div class="container shadow-lg my-0 p-0">
     <div class="d-flex chat-header w-100 py-2 text-center justify-content-between align-items-center">
       <div class="d-flex flex-row">
-        <img src="/agent.png" alt="" class="ps-3 pe-2 py-1" style="height: 60px; width: auto">
+        <div class="d-flex ps-3 pe-2 py-1">
+          <img src="/agent.png" alt="" class="" style="height: 60px; width: auto;">
+        </div>
         <div class="d-flex flex-column chatDetails align-items-start justify-content-center">
           <p class="mb-0">Bot</p>
           <span class="mb-0">Online</span>
