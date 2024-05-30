@@ -301,7 +301,7 @@
 
     .quickQuestionButton {
       background-color: #1C73D4;
-      border-radius: 10px;
+      border-radius: 5px;
       border: none;
       color: #fff;
       font-weight: 400;
@@ -309,6 +309,11 @@
       font-family: "Poppins", sans-serif;
       padding: 8px;
       text-align: start;
+    }
+
+    .quickQuestionButton i{
+      font-size: 20px;
+      padding-left: 10px;
     }
   </style>
 </head>
@@ -392,9 +397,28 @@
 
       ];
 
+      // questions.forEach((q, index) => {
+      //   const button = document.createElement('button');
+      //   button.textContent = q.question;
+      //   button.classList.add('quickQuestionButton', 'my-1');
+      //   button.addEventListener('click', () => {
+      //     appendMessageToResponse('user', q.question);
+      //     displayAnswer(q.answer);
+      //   });
+      //   questionButtonsDiv.appendChild(button);
+      // });
+
       questions.forEach((q, index) => {
         const button = document.createElement('button');
-        button.textContent = q.question;
+
+        // Use innerHTML to add HTML content inside the button
+        button.innerHTML = `
+        <span class="d-flex flex-row justify-content-between align-items-center"> 
+          <span>${q.question}</span> 
+          <i class="bi bi-arrow-right-square-fill"></i>
+        </span>
+        `;
+
         button.classList.add('quickQuestionButton', 'my-1');
         button.addEventListener('click', () => {
           appendMessageToResponse('user', q.question);
@@ -402,6 +426,8 @@
         });
         questionButtonsDiv.appendChild(button);
       });
+
+
     }
 
     function displayAnswer(answer) {
