@@ -449,7 +449,7 @@ function setFormattedOpenedTime() {
   const Openedampm = Opendhours >= 12 ? 'PM' : 'AM';
   Opendhours = Opendhours % 12;
   Opendhours = Opendhours ? Opendhours : 12; // the hour '0' should be '12'
-  const formattedOpenedTime = `${Opendhours.toString().padStart(2, '0')}:${Openedminutes}:${Openedseconds} ${Openedampm}`;
+  const formattedOpenedTime = `${Opendhours.toString().padStart(2, '0')}:${Openedminutes} ${Openedampm}`;
 
   document.getElementById('OpenedTime1').textContent = formattedOpenedTime;
   document.getElementById('OpenedTime2').textContent = formattedOpenedTime;
@@ -540,7 +540,7 @@ setFormattedOpenedTime();
       const ampm = hours >= 12 ? 'PM' : 'AM';
       hours = hours % 12;
       hours = hours ? hours : 12; // the hour '0' should be '12'
-      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes} ${ampm}`;
 
 
       if (isList) {
