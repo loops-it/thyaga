@@ -89,22 +89,25 @@
       text-align: start !important;
     }
 
-    .user-message .message-image{
+    .user-message .message-image {
       display: none;
     }
+
     /* .user-message div p{
       width: 100%;
     } */
-    .user-message .messageWrapper{
+    .user-message .messageWrapper {
       padding-right: 10px;
       text-align: end;
       align-self: end !important;
     }
-    .user-message .messageWrapper .botname-message{
+
+    .user-message .messageWrapper .botname-message {
       padding-right: 10px;
       text-align: end;
       align-self: end !important;
     }
+
     .background {
       background: transparent;
     }
@@ -365,7 +368,8 @@
       <div class="d-flex flex-row">
         <div class="d-flex ps-3 pe-2 py-1 position-relative">
           <img src="/agent.png" alt="" class="" style="height: 60px; width: auto;">
-          <span class="position-absolute start-100 translate-middle p-1 rounded-circle" style="background-color: rgb(5, 233, 5); bottom: 0; margin-left: -20px !important;">
+          <span class="position-absolute start-100 translate-middle p-1 rounded-circle"
+            style="background-color: rgb(5, 233, 5); bottom: 0; margin-left: -20px !important;">
             <span class="visually-hidden">New alerts</span>
           </span>
         </div>
@@ -386,7 +390,7 @@
           <img class="message-image" src="/agent.png">
 
           <div class="messageWrapper">
-            <span class="botname-message">ChatBot</span>
+            <span class="botname-message" id="OpenedTime1">ChatBot</span>
             <!-- <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid"> -->
             <div>
               <p class="mb-0">Hi, How can I help you today!</p>
@@ -411,7 +415,7 @@
           <img class="message-image" src="/agent.png">
 
           <div class="messageWrapper">
-            <span class="botname-message">ChatBot</span>
+            <span class="botname-message" id="OpenedTime2"></span>
             <div>
               <p class="mb-0">Here's few ways to start with us.</p>
             </div>
@@ -436,6 +440,24 @@
 
 
   <script>
+
+function setFormattedOpenedTime() {
+  const OpenedTime = new Date();
+  let Opendhours = OpenedTime.getHours();
+  const Openedminutes = OpenedTime.getMinutes().toString().padStart(2, '0');
+  const Openedseconds = OpenedTime.getSeconds().toString().padStart(2, '0');
+  const Openedampm = Opendhours >= 12 ? 'PM' : 'AM';
+  Opendhours = Opendhours % 12;
+  Opendhours = Opendhours ? Opendhours : 12; // the hour '0' should be '12'
+  const formattedOpenedTime = `${Opendhours.toString().padStart(2, '0')}:${Openedminutes}:${Openedseconds} ${Openedampm}`;
+
+  document.getElementById('OpenedTime1').textContent = formattedOpenedTime;
+  document.getElementById('OpenedTime2').textContent = formattedOpenedTime;
+}
+
+// Call the function to set the time
+setFormattedOpenedTime();
+
 
     function generateQuestionButtons() {
       const questionButtonsDiv = document.getElementById('questionButtons');
@@ -500,15 +522,25 @@
       const isList = listRegex.test(content);
 
       let messageRole;
-      if(role === 'user'){
+      if (role === 'user') {
         messageRole = "User"
       }
-      else if(role === 'bot'){
+      else if (role === 'bot') {
         messageRole = "ChatBot"
       }
-      else{
+      else {
         messageRole = "Live Agent"
       }
+
+
+      const currentTime = new Date();
+      let hours = currentTime.getHours();
+      const minutes = currentTime.getMinutes().toString().padStart(2, '0');
+      const seconds = currentTime.getSeconds().toString().padStart(2, '0');
+      const ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes}:${seconds} ${ampm}`;
 
 
       if (isList) {
@@ -517,7 +549,7 @@
         }).join('');
         messageDiv.innerHTML = `
       <div class="messageWrapper">
-        <span class="botname-message">${messageRole}</span>
+        <span class="botname-message">${formattedTime}</span>
         <div>
           <ul style="list-style: none; padding: 0px !important">${listItems}</ul>
         </div>
@@ -525,7 +557,7 @@
       } else {
         messageDiv.innerHTML = `
       <div class="messageWrapper">
-        <span class="botname-message">${messageRole}</span>
+        <span class="botname-message">${formattedTime}</span>
         <div>
           <p class="mb-0">${content}</p>
         </div>
