@@ -444,22 +444,85 @@
 
   <script>
 
-function setFormattedOpenedTime() {
-  const OpenedTime = new Date();
-  let Opendhours = OpenedTime.getHours();
-  const Openedminutes = OpenedTime.getMinutes().toString().padStart(2, '0');
-  const Openedseconds = OpenedTime.getSeconds().toString().padStart(2, '0');
-  const Openedampm = Opendhours >= 12 ? 'PM' : 'AM';
-  Opendhours = Opendhours % 12;
-  Opendhours = Opendhours ? Opendhours : 12; // the hour '0' should be '12'
-  const formattedOpenedTime = `${Opendhours.toString().padStart(2, '0')}:${Openedminutes} ${Openedampm}`;
 
-  document.getElementById('OpenedTime1').textContent = formattedOpenedTime;
-  document.getElementById('OpenedTime2').textContent = formattedOpenedTime;
-}
 
-// Call the function to set the time
-setFormattedOpenedTime();
+    // quick questions ============================================================
+  //   var quickQuestions = [];
+  // <% for (var i = 0; i < questions.length; i++) { %>
+  //     quickQuestions.push({
+  //       question: "<%= questions[i].question %>",
+  //       answer: "<%= questions[i].answer %>"
+  //     });
+  // <% } %>
+
+
+  //   var questionButtonsContainer = document.getElementById("questionButtons");
+
+  //   quickQuestions.forEach(function (qa) {
+  //     var button = document.createElement("button");
+  //     button.textContent = qa.question;
+  //     button.addEventListener("click", function () {
+
+  //       // Add the clicked question as a user message to the chat history
+  //       chatHistory.push({ role: 'quickQuestion', content: qa.question });
+
+  //       // Display the user's question
+  //       appendMessageToResponse('quickQuestion', qa.question);
+  //       // Display the corresponding answer
+  //       appendMessageToResponse('quickAnswer', qa.answer);
+  //     });
+  //     questionButtonsContainer.appendChild(button);
+  //   });
+  var quickQuestions = [];
+<% for (var i = 0; i < questions.length; i++) { %>
+    quickQuestions.push({
+        question: "<%= questions[i].question %>",
+        answer: "<%= questions[i].answer %>"
+    });
+<% } %>
+
+var questionButtonsContainer = document.getElementById("questionButtons");
+
+quickQuestions.forEach(function (qa) {
+    var button = document.createElement("button");
+    button.classList.add('quickQuestionButton', 'my-1');
+    button.innerHTML = `
+        <span class="d-flex flex-row justify-content-between align-items-center"> 
+          <span>${qa.question}</span> 
+          <i class="bi bi-arrow-right-square-fill"></i>
+        </span>
+    `;
+    button.addEventListener("click", function () {
+        // Add the clicked question as a user message to the chat history
+        chatHistory.push({ role: 'quickQuestion', content: qa.question });
+
+        // Display the user's question
+        appendMessageToResponse('quickQuestion', qa.question);
+        // Display the corresponding answer
+        appendMessageToResponse('quickAnswer', qa.answer);
+    });
+    questionButtonsContainer.appendChild(button);
+});
+
+    // quick questions ============================================================
+
+
+    function setFormattedOpenedTime() {
+      const OpenedTime = new Date();
+      let Opendhours = OpenedTime.getHours();
+      const Openedminutes = OpenedTime.getMinutes().toString().padStart(2, '0');
+      const Openedseconds = OpenedTime.getSeconds().toString().padStart(2, '0');
+      const Openedampm = Opendhours >= 12 ? 'PM' : 'AM';
+      Opendhours = Opendhours % 12;
+      Opendhours = Opendhours ? Opendhours : 12; // the hour '0' should be '12'
+      const formattedOpenedTime = `${Opendhours.toString().padStart(2, '0')}:${Openedminutes} ${Openedampm}`;
+
+      document.getElementById('OpenedTime1').textContent = formattedOpenedTime;
+      document.getElementById('OpenedTime2').textContent = formattedOpenedTime;
+    }
+
+    // Call the function to set the time
+    setFormattedOpenedTime();
 
 
     function generateQuestionButtons() {
@@ -513,13 +576,31 @@ setFormattedOpenedTime();
     function appendMessageToResponse(role, content) {
       const responseDiv = document.getElementById("response");
       const messageDiv = document.createElement("div");
-      messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
+
+
+      // quick questions ============================================================
+      if (role === 'quickQuestion') {
+        messageDiv.classList.add("user-message"); // Apply user message style
+      } else if (role === 'quickAnswer') {
+        messageDiv.classList.add("bot-message"); // Apply bot message style
+      } else {
+        messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
+      }
+
+
+
+      // messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
 
 
       const image = document.createElement("img");
       image.classList.add("message-image");
-      image.src = role === 'user' ? "/user.webp" : "/agent.png";
-
+      // image.src = role === 'user' ? "/user.webp" : "/agent.png";
+// quick questions ============================================================
+if (role === 'quickQuestion' || role === 'user') {
+        image.src = "/user.webp"; // Set user image
+      } else {
+        image.src = "/agent.png"; // Set bot image
+      }
 
       const listRegex = /^\d+\.\s.*$/gm;
       const isList = listRegex.test(content);
@@ -574,7 +655,7 @@ setFormattedOpenedTime();
       responseDiv.scrollTop = responseDiv.scrollHeight;
     }
 
-    generateQuestionButtons();
+    // generateQuestionButtons();
 
 
 
