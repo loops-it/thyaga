@@ -774,42 +774,20 @@
 
         appendMessageToResponse("user", question);
 
-        let chatId = localStorage.getItem("chatId");
-        console.log("generated chat id : ", chatId);
+        let liveChatID =  localStorage.getItem("LiveagentChatID");
+        console.log("generated chat id : ", liveChatID);
         const requestBody = {
-          chatId: chatId,
+          chatId: liveChatID,
           messages: chatHistory,
           language: selectedLanguage || "English",
         };
         const requestBodyAgent = {
-          chatId: chatId,
+          chatId: liveChatID,
           user_message: question,
           language: selectedLanguage || "English",
         };
 
         console.log("requestBody : ", requestBody);
-
-        // if (chatWithAgent === false) {
-        //   // Display the user's message immediately
-        //   // Change button icon to three dots
-        //   const submitButton = document.querySelector(".chat-submit-button");
-        //   submitButton.innerHTML = '<i class="bi bi-three-dots loading"></i>';
-        //   submitButton.disabled = true;
-
-        //   // Disable input field
-        //   questionInput.disabled = true;
-        //   // Show typing animation
-        //   showTypingAnimation();
-
-        // } else {
-
-
-        //   // Append the response to the response div
-
-        //   checkForAgent();
-        //   // Clear the question input
-        //   questionInput.value = "";
-        // }
 
         try {
           const response = await fetch("/live-chat-agent", {
@@ -817,7 +795,7 @@
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ chatId: chatId }),
+            body: JSON.stringify({ chatId: liveChatID }),
           });
 
           if (response.ok) {
@@ -839,19 +817,48 @@
       });
 
 
+
+      async function connectLiveAgent(language) {
+  try {
+    const response = await fetch("/direct-connect-live-agent", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ language: language }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error: ${response.statusText}`);
+    }
+
+    const responseData = await response.json(); // Parse the response as JSON
+    console.log(`Language changed to ${language}`);
+    console.log("response:", responseData);
+    localStorage.setItem('LiveagentChatID', responseData.chatId);
+
+  } catch (error) {
+    console.error("Error changing language:", error);
+  }
+}
+
     document.getElementById("changeToEnglishButton").addEventListener("click", function () {
       localStorage.setItem('selectedLanguage', 'English');
       appendLanguageMessage("Please ask your question in English.");
+      connectLiveAgent('English');
+
     });
 
     document.getElementById("changeToSinhalaButton").addEventListener("click", function () {
       localStorage.setItem('selectedLanguage', 'Sinhala');
       appendLanguageMessage("කරුණාකර ඔබේ ප්‍රශ්නය සිංහලෙන් අසන්න.");
+      connectLiveAgent('Sinhala');
     });
 
     document.getElementById("changeToTamilButton").addEventListener("click", function () {
       localStorage.setItem('selectedLanguage', 'Tamil');
       appendLanguageMessage("உங்கள் கேள்வியை தமிழில் கேளுங்கள்.");
+      connectLiveAgent('Tamil');
     });
 
     function appendLanguageMessage(content) {
