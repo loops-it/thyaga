@@ -757,6 +757,8 @@
       }, 120000);
     }
 
+    
+
     document
       .getElementById("questionForm")
       .addEventListener("submit", async function (event) {
@@ -787,27 +789,53 @@
 
         console.log("requestBody : ", requestBody);
 
-        if (chatWithAgent === false) {
-          // Display the user's message immediately
-          // Change button icon to three dots
-          const submitButton = document.querySelector(".chat-submit-button");
-          submitButton.innerHTML = '<i class="bi bi-three-dots loading"></i>';
-          submitButton.disabled = true;
+        // if (chatWithAgent === false) {
+        //   // Display the user's message immediately
+        //   // Change button icon to three dots
+        //   const submitButton = document.querySelector(".chat-submit-button");
+        //   submitButton.innerHTML = '<i class="bi bi-three-dots loading"></i>';
+        //   submitButton.disabled = true;
 
-          // Disable input field
-          questionInput.disabled = true;
-          // Show typing animation
-          showTypingAnimation();
+        //   // Disable input field
+        //   questionInput.disabled = true;
+        //   // Show typing animation
+        //   showTypingAnimation();
 
-        } else {
+        // } else {
 
 
-          // Append the response to the response div
+        //   // Append the response to the response div
 
-          checkForAgent();
-          // Clear the question input
-          questionInput.value = "";
+        //   checkForAgent();
+        //   // Clear the question input
+        //   questionInput.value = "";
+        // }
+
+        try {
+          const response = await fetch("/live-chat-agent", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ chatId: chatId }),
+          });
+
+          if (response.ok) {
+            const responseData = await response.json();
+            if (responseData.agent_id !== "unassigned") {
+              if (!agentJoined) {
+                showAlert("Now you are chatting with agent ID: " + responseData.agent_name);
+                agentJoined = true;
+                chatWithAgent = true;
+              }
+              appendMessageToResponse("liveagent", responseData.agent_message, data);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching products data:", error);
         }
+
+        questionInput.value = "";
       });
 
 
