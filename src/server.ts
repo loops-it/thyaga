@@ -60,6 +60,8 @@ app.use(session({
 app.use(flash());
 // Routes
 app.use('/', indexRouter);
+app.use('/bot', indexRouter);
+app.use('/live-agent', indexRouter);
 app.post('/api/chat-response', chatResponse);
 app.get('/view-documents', adminLogged, viewDocuments);
 app.get('/upload-documents', adminLogged, (req: Request, res: Response) => {
