@@ -594,142 +594,29 @@
       responseDiv.innerHTML = errorMessage;
     }
 
-    // Function to append a message to the response div
-    // function appendMessageToResponse(role, content) {
-    //   const responseDiv = document.getElementById("response");
-    //   const messageDiv = document.createElement("div");
-    //   messageDiv.classList.add(role === 'user' ? "user-message" : "bot-message");
-
-    //   // Create an image element for the message
-    //   const image = document.createElement("img");
-    //   image.classList.add("message-image");
-    //   image.src = role === 'user' ? "/user.webp" : "/agent.png"; // Replace with actual image URLs
-
-    //   // Use innerHTML to allow HTML formatting in the message
-    //   // Check if the content is a list
-    //   const listRegex = /^\d+\.\s.*$/gm;
-    //   const isList = listRegex.test(content);
-
-    //   // If it's a list, format it as an unordered list
-    //   if (isList) {
-    //     const listItems = content.split('\n').map(item => {
-    //       return `<li style="margin-bottom: 10px !important;">${item}</li>`;
-    //     }).join('');
-    //     messageDiv.innerHTML = `
-    //     <div class="messageWrapper">
-    //     <span class="botname-message">ChatBot</span>
-    //     <div>
-    //       <ul style="list-style: none; padding: 0px !important">${listItems}</ul>
-    //     </div>
-    //   </div>`;
-    //   } else {
-    //     messageDiv.innerHTML = `<div class="messageWrapper">
-    //     <span class="botname-message">ChatBot</span>
-    //     <div>
-    //       <p class="mb-0">${content}</p>
-    //     </div>
-    //   </div>`;
-    //   }
-    //   messageDiv.prepend(image);
-
-    //   responseDiv.appendChild(messageDiv);
-    //   // Scroll down to the latest message
-    //   responseDiv.scrollTop = responseDiv.scrollHeight;
-    //   // Show typing animation if required
-
-    // }
-
-    // document.getElementById("questionForm").addEventListener("submit", async function (event) {
-    //   event.preventDefault();
-    //   const questionInput = document.getElementById("question");
-    //   const question = questionInput.value;
-    //   document.getElementById("question").value = "";
-
-    //   // const selectedLanguage = localStorage.getItem('selectedLanguage');
-    //   const selectedLanguage = "English";
-
-    //   try {
-    //     // Add the user's question to the chat history
-    //     chatHistory.push({ role: 'user', content: question });
-
-    //     // Display the user's message immediately
-    //     appendMessageToResponse('user', question);
-
-    //     // Disable input field
-    //     questionInput.disabled = true;
-    //     // Show typing animation
-    //     showTypingAnimation();
-
-    //     // Change button icon to three dots and add loading animation
-    //     const submitButton = document.querySelector('.chat-submit-button');
-    //     submitButton.innerHTML = '<i class="bi bi-three-dots loading"></i>';
-    //     // submitButton.classList.add('loading');
-    //     submitButton.disabled = true;
-
-    //     let chatId = localStorage.getItem('chatId');
-    //     console.log("generated chat id : ", chatId)
-    //     const requestBody = {
-    //       messages: chatHistory,
-    //       chatId: chatId,
-    //       language: selectedLanguage || 'English'
-    //     };
-
-    //     console.log("requestBody : ", requestBody)
-    //     const response = await fetch("/api/chat-response", {
-    //       method: "POST",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       body: JSON.stringify(requestBody),
-    //     });
-
-    //     const data = await response.json();
-
-    //     // Update the chat history for future interactions
-    //     chatHistory = data.chatHistory || [];
-    //     console.log("chatId : ", data.chatId);
-
-    //     if (!localStorage.getItem('chatId')) {
-    //       localStorage.setItem('chatId', data.chatId);
-    //     }
-
-    //     // Display the bot's response in HTML format
-    //     appendMessageToResponse('bot', data.answer);
-
-    //     // Hide typing animation
-    //     hideTypingAnimation();
-
-    //     // Clear the question input
-    //     questionInput.value = '';
-    //     submitButton.innerHTML = '<i class="bi bi-send-fill"></i>'
-    //     submitButton.disabled = false;
-    //     // handleErrorMessage(error);
 
 
-    //   } catch (error) {
-    //     console.error("Error submitting question:", error);
-    //     // Handle specific error message
-    //     handleErrorMessage(error);
-    //   } finally {
-    //     // Enable input field
-    //     questionInput.disabled = false;
-    //     submitButton.disabled = false;
+    
 
-    //   }
-    // });
-
-    function startCheckingForAgent(data) {
+    function startCheckingForAgent(chatId) {
+      
       let intervalId;
-      let agentJoined = false;
+    let agentJoined = false;
+
+    if (intervalId) {
+        clearInterval(intervalId);
+      }
+      console.log("Live chat enabled");
 
       intervalId = setInterval(async () => {
+        console.log("Checking for agent...",chatId );
         try {
           const response = await fetch("/live-chat-agent", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ chatId: data.chatId }),
+            body: JSON.stringify({ chatId: chatId }),
           });
 
           if (response.ok) {
@@ -738,13 +625,15 @@
               if (!agentJoined) {
                 showAlert("Now you are chatting with agent ID: " + responseData.agent_name);
                 agentJoined = true;
-                chatWithAgent = true;
               }
-              appendMessageToResponse("liveagent", responseData.agent_message, data);
+              console.log("responseData ----> ", responseData)
+              if (responseData.agent_message !== null) {
+            appendMessageToResponse("liveagent", responseData.agent_message, chatId);
+          }
             }
           }
         } catch (error) {
-          console.error("Error fetching products data:", error);
+          console.error("Error fetching live chat data:", error);
         }
       }, 5000);
 
@@ -757,7 +646,19 @@
       }, 120000);
     }
 
-    
+    function showAlert(message) {
+      const responseDiv = document.getElementById("response");
+      const alertDiv = document.createElement("div");
+      alertDiv.classList.add("alert", "alert-warning", "alert-dismissible", "fade", "show", "me-2");
+      alertDiv.setAttribute("role", "alert");
+      alertDiv.innerHTML = `
+      ${message}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    `;
+      responseDiv.appendChild(alertDiv);
+      alertDiv.scrollIntoView({ behavior: "smooth" });
+    }
+
 
     document
       .getElementById("questionForm")
@@ -768,49 +669,55 @@
 
         document.getElementById("question").value = "";
 
-        const selectedLanguage = localStorage.getItem("selectedLanguage");
-        // Add the user's question to the chat history
+        const selectedLanguage = localStorage.getItem("selectedLanguage") || "English";
         chatHistory.push({ role: "user", content: question });
 
         appendMessageToResponse("user", question);
 
-        let liveChatID =  localStorage.getItem("LiveagentChatID");
-        console.log("generated chat id : ", liveChatID);
+        let liveChatID = localStorage.getItem("LiveagentChatID");
+        if (!liveChatID) {
+          // Generate and store a new chat ID if not already set
+          liveChatID = generateNewChatID(); // Define this function as per your logic
+          localStorage.setItem("LiveagentChatID", liveChatID);
+        }
+
         const requestBody = {
-          chatId: liveChatID,
-          messages: chatHistory,
-          language: selectedLanguage || "English",
+            chatId: liveChatID,
+            messages: chatHistory,
+            language: selectedLanguage || "English",
         };
         const requestBodyAgent = {
-          chatId: liveChatID,
-          user_message: question,
-          language: selectedLanguage || "English",
+            chatId: liveChatID,
+            user_message: question,
+            language: selectedLanguage || "English",
         };
 
         console.log("requestBody : ", requestBody);
 
-        try {
-          const response = await fetch("/live-chat-agent", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ chatId: liveChatID }),
-          });
 
-          if (response.ok) {
-            const responseData = await response.json();
-            if (responseData.agent_id !== "unassigned") {
-              if (!agentJoined) {
-                showAlert("Now you are chatting with agent ID: " + responseData.agent_name);
-                agentJoined = true;
-                chatWithAgent = true;
-              }
-              appendMessageToResponse("liveagent", responseData.agent_message, data);
-            }
-          }
+        try {
+          const responseLiveAgent = await fetch("/live-chat-user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBodyAgent),
+            });
+
+            const liveAgentData = await responseLiveAgent.json();
+            chatHistory = liveAgentData.chatHistory || []; // Update chat history
+
+            // Append the response to the response div
+
+            // checkForAgent();
+            startCheckingForAgent(liveChatID);
+            // Hide typing animation
+            // hideTypingAnimation();
+
+            // Clear the question input
+            questionInput.value = "";
         } catch (error) {
-          console.error("Error fetching products data:", error);
+          console.error("Error starting agent check:", error);
         }
 
         questionInput.value = "";
@@ -818,29 +725,31 @@
 
 
 
-      async function connectLiveAgent(language) {
-  try {
-    const response = await fetch("/direct-connect-live-agent", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ language: language }),
-    });
 
-    if (!response.ok) {
-      throw new Error(`Error: ${response.statusText}`);
+    async function connectLiveAgent(language) {
+      try {
+        const response = await fetch("/direct-connect-live-agent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ language: language }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const responseData = await response.json(); // Parse the response as JSON
+        console.log(`Language changed to ${language}`);
+        console.log("response:", responseData);
+        localStorage.setItem('LiveagentChatID', responseData.chatId);
+
+
+      } catch (error) {
+        console.error("Error changing language:", error);
+      }
     }
-
-    const responseData = await response.json(); // Parse the response as JSON
-    console.log(`Language changed to ${language}`);
-    console.log("response:", responseData);
-    localStorage.setItem('LiveagentChatID', responseData.chatId);
-
-  } catch (error) {
-    console.error("Error changing language:", error);
-  }
-}
 
     document.getElementById("changeToEnglishButton").addEventListener("click", function () {
       localStorage.setItem('selectedLanguage', 'English');
