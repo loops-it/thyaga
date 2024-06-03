@@ -420,24 +420,9 @@
 
                     <div class="messageWrapper">
                         <span class="botname-message" id="OpenedTime1">ChatBot</span>
-                        <!-- <img src="../language-img.webp" alt="" class="px-3 py-2 mb-3 img-fluid"> -->
                         <div>
                             <p class="mb-0">Hi, How can I help you today!</p>
                         </div>
-                        <!-- <p class="mb-2">ආයුබෝවන්, Thyaga වෙත ඔබව සාදරයෙන් පිළිගනිමු. කරුණාකර ආරම්භ කිරීමට භාෂාව තෝරන්න.</p> -->
-                        <!-- <p class="mb-2">வணக்கம், Thyaga வரவேற்கிறோம். தொடங்குவதற்கு மொழியைத் தேர்ந்தெடுக்கவும்.</p> -->
-
-                        <!-- <span class="d-flex flex-row language-buttons w-100 p-0 m-0">
-              <span class="col-4 pe-1">
-                <button id="changeToEnglishButton">English</button>
-              </span>
-              <span class="col-4 pe-1">
-                <button id="changeToSinhalaButton">Sinhala</button>
-              </span>
-              <span class="col-4">
-                <button id="changeToTamilButton">Tamil</button>
-              </span>
-            </span><br> -->
                     </div>
                 </div>
                 <div class="bot-message">
@@ -493,7 +478,7 @@ var questionButtonsContainer = document.getElementById("questionButtons");
     `;
             button.addEventListener("click", function () {
                 // Add the clicked question as a user message to the chat history
-                chatHistory.push({ role: 'quickQuestion', content: qa.question });
+                // chatHistory.push({ role: 'user', content: qa.question });
 
                 // Display the user's question
                 appendMessageToResponse('quickQuestion', qa.question);
