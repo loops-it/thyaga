@@ -61,6 +61,8 @@ app.use(session({
 app.use(flash());
 // Routes
 app.use('/', indexRouter);
+app.use('/bot', indexRouter);
+app.use('/live-agent', indexRouter);
 app.post('/api/chat-response', chatResponse);
 app.post('/live-chat-agent', liveChat);
 app.post('/live-chat-user', liveChatUser);
