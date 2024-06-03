@@ -14,7 +14,7 @@ import { login, agent } from './controllers/loginController';
 import { adminLogged } from './controllers/adminLogged';
 import { agentLogged } from './controllers/agentLogged';
 import { liveChatsOnload,refreshLiveChats,replyLiveChats,sendReplyLiveChats,closeLiveChats,refreshLiveChatInner } from './controllers/liveChats';
-import { liveChat, saveRating,switchToAgent,liveChatUser } from './controllers/liveChatController';
+import { liveChat, saveRating,switchToAgent,liveChatUser,directConnectAgent } from './controllers/liveChatController';
 import session from "express-session";
 import flash from "express-flash";
 import cookieParser from 'cookie-parser';
@@ -67,6 +67,7 @@ app.post('/api/chat-response', chatResponse);
 app.post('/live-chat-agent', liveChat);
 app.post('/live-chat-user', liveChatUser);
 app.post('/switch-to-live-agent', switchToAgent);
+app.post('/direct-connect-live-agent', directConnectAgent);
 app.post('/save-rating', saveRating);
 app.get('/view-documents', adminLogged, viewDocuments);
 app.get('/upload-documents', adminLogged, (req: Request, res: Response) => {
