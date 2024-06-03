@@ -9,6 +9,7 @@ class ChatHeader extends Model {
   public rating!: string;
   public feedback!: string;
   public status!: string;
+  public is_time_out!: string;
 }
 
 ChatHeader.init(
@@ -20,27 +21,31 @@ ChatHeader.init(
     },
     message_id: {
         type: new DataTypes.STRING(),
-        allowNull: false,
+        allowNull: true,
       },
     agent: {
       type: new DataTypes.STRING(),
-      allowNull: false,
+      allowNull: true,
     },
     language: {
       type: new DataTypes.STRING(),
-      allowNull: false,
+      allowNull: true,
     },
     rating: {
         type: new DataTypes.STRING(),
-        allowNull: false,
+        allowNull: true,
       },
     feedback: {
         type: new DataTypes.STRING(),
-        allowNull: false,
+        allowNull: true,
       },
     status: {
         type: new DataTypes.STRING(),
-        allowNull: false,
+        allowNull: true,
+      },
+      is_time_out: {
+        type: new DataTypes.STRING(),
+        allowNull: true,
       },
   },
   {
