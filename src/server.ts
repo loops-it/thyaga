@@ -23,7 +23,9 @@ import { adminAccountCreate,adminUpdate,matchPassword,adminUpdateWithPassword } 
 import { agentCreateAccount,agentUpdateAccount,agentUpdateWithPassword } from './controllers/AgentAccount';
 import { botChatsOnload,botChatsGetMessages,botChatsRefresh,botChatsRefreshMessage} from './controllers/botChats';
 import { LiveChatHistoryOnload,LiveChatHistoryMessages,LiveChatHistoryRefresh,LiveChatHistoryRefreshMessages} from './controllers/LiveChatHistory';
+import { quickQuestionsAdd,quickQuestionsEdit} from './controllers/quickQuestions';
 import Admin from '../models/Admin';
+import QuickQuestion from '../models/QuickQuestion';
 import User from '../models/User';
 import BotChats from '../models/BotChats';
 import Agent from '../models/Agent';
@@ -258,6 +260,34 @@ app.post('/agent', agent);
 app.get('/agent-dashboard', agentLogged, (req: Request, res: Response) => {
     res.render('agent-dashboard');
 });
+app.get('/quick-questions', adminLogged, async (req: Request, res: Response) => {
+  const successMessage = req.flash('success')[0];
+  const errorMessage = req.flash('error')[0];
+  const questions  = await QuickQuestion.findAll({});
+
+  res.render('quick-questions', {successMessage: successMessage,errorMessage: errorMessage,questions: questions});
+});
+app.post('/quick-questions', quickQuestionsAdd);
+app.get('/delete-question/:id', adminLogged, async (req: Request, res: Response) => {
+  let id = req.params.id;
+  await QuickQuestion.destroy(
+      { where: { id: id } }
+    );
+    req.flash('success', `Question Deleted`);
+  res.redirect("/quick-questions");
+});
+app.get('/edit-question', adminLogged, async (req: Request, res: Response) => {
+  const successMessage = req.flash('success')[0];
+  const errorMessage = req.flash('error')[0];
+  const id = req.query.id;
+  const question_details  = await QuickQuestion.findOne({
+      where: {
+        id : id,
+      },
+  });
+  res.render('edit-question', {successMessage: successMessage,errorMessage: errorMessage,question_details: question_details});
+});
+app.post('/quick-questions-edit', quickQuestionsEdit);
 app.get('/live-chats', agentLogged, async (req, res) => {
 
     //console.log(res.locals.agent_login_details.dataValues);
