@@ -675,7 +675,9 @@ function appendMessageToResponse(role, content, data, isRatingForm = false) {
     }
 
     if (isRatingForm) {
-        appendRatingForm(messageDiv);
+        // appendRatingForm(messageDiv);
+        const chatId = localStorage.getItem("chatId");
+        appendRatingForm(messageDiv, chatId);
     }
 
     resetChatTimeout();
@@ -950,19 +952,21 @@ function appendRatingForm(messageDiv) {
         </div>
         <input type="hidden" id="rating" name="rating" value="0">
         <textarea type="text" id="feedbackMessage" name="feedbackMessage" class="feedbackMessage mb-2"></textarea>
-        <button id="submitRatingButton" class="btnNotoClose">Submit</button>
+        <button id="submitRatingButton" class="btnNotoClose" onclick="handleRatingSubmission()">Submit</button>
       </div>
     `;
+
+    const chatId = localStorage.getItem("chatId");
     messageDiv.innerHTML += ratingFormHTML;
-    addRatingIconEventListeners(messageDiv);
+    addRatingIconEventListeners(messageDiv, chatId);
 }
 
-function addRatingIconEventListeners(messageDiv) {
-    const ratingIcons = messageDiv.querySelectorAll(".rating-icon");
-    ratingIcons.forEach((icon, index) => {
-        icon.addEventListener("click", handleRatingIconClick(messageDiv, index));
-    });
-}
+// function addRatingIconEventListeners(messageDiv) {
+//     const ratingIcons = messageDiv.querySelectorAll(".rating-icon");
+//     ratingIcons.forEach((icon, index) => {
+//         icon.addEventListener("click", handleRatingIconClick(messageDiv, index));
+//     });
+// }
 
 function handleRatingIconClick(messageDiv, index) {
     return function () {
@@ -974,6 +978,51 @@ function handleRatingIconClick(messageDiv, index) {
         });
     };
 }
+
+function addRatingIconEventListeners(messageDiv, chatId) {
+    const ratingIcons = messageDiv.querySelectorAll(".rating-icon");
+    const ratingInput = messageDiv.querySelector("#rating");
+    ratingIcons.forEach((icon, index) => {
+        icon.addEventListener("click", () => {
+            ratingIcons.forEach((icon, i) => {
+                icon.classList.toggle("bi-star-fill", i <= index);
+                icon.classList.toggle("bi-star", i > index);
+            });
+            ratingInput.value = index + 1;
+        });
+    });
+
+    const submitButton = messageDiv.querySelector("#submitRatingButton");
+    submitButton.addEventListener("click", () => {
+        const ratingValue = ratingInput.value;
+        const feedbackMessage = messageDiv.querySelector("#feedbackMessage").value;
+        console.log("rating sent clicked")
+        submitRating(chatId, ratingValue, feedbackMessage);
+    });
+}
+
+// async function submitRating(chatId, ratingValue, feedbackMessage) {
+//     try {
+//         const response = await fetch("/save-rating", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
+//             },
+//             body: JSON.stringify({ chatId, ratingValue: ratingValue, feedbackMessage: feedbackMessage }),
+//         });
+
+//         if (response.ok) {
+//             const responseData = await response.json();
+//             console.log("star rating response : ", responseData)
+//             showAlert("Thank you for your feedback!");
+//         } else {
+//             showAlert("Failed to submit feedback. Please try again.");
+//         }
+//     } catch (error) {
+//         console.error("Error submitting rating:", error);
+//         showAlert("An error occurred. Please try again.");
+//     }
+// }
 
 function showAlert(message) {
     const responseDiv = document.getElementById("response");
