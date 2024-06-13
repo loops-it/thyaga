@@ -131,7 +131,7 @@ export const chatResponse = async (req: RequestWithChatId, res: Response) => {
 // Standalone question:`
 
             
-const questionRephrasePrompt = `As a customer service assistant, kindly assess whether the FOLLOWUP QUESTION related to the CHAT HISTORY or if it introduces a new question. If the FOLLOWUP QUESTION is unrelated, Do NOT rephrase it. However, if it is related, please rephrase it as an independent query utilizing relevent keywords from the CHAT HISTORY. If the user asks specifically for email or address, provide Thyaga email and address.
+const questionRephrasePrompt = `As a customer service assistant, kindly assess whether the FOLLOWUP QUESTION related to the CHAT HISTORY or if it introduces a new question. If the FOLLOWUP QUESTION is unrelated, refrain from rephrasing it. However, if it is related, please rephrase it as an independent query utilizing relevent keywords from the CHAT HISTORY.
 ----------
 CHAT HISTORY: {${chatHistoryString}}
 ----------
