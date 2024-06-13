@@ -215,7 +215,7 @@ z-index: 0  !important;
     function CloseLiveChat(message_id){
     
     const message_data = {
-        message_id: message_id
+        chatId: message_id
     }
         fetch("close-live-chat", {
         method: "post",

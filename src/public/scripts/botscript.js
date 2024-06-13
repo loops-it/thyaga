@@ -102,7 +102,7 @@ function showEndChatAlert() {
       alertDiv.innerHTML = `
               It seems you haven't sent a message for a while. Do you want to end the chat?
               <div class="d-flex flex-row">
-                <button type="button" class="btnYesToClose btn-end-chat" onclick="handleEndChatBot()">Yes</button>
+                <button type="button" class="btnYesToClose" onclick="handleEndChatBot()">Yes</button>
                 <button type="button" class="btnNotoClose ms-2" data-bs-dismiss="alert">Cancel</button>
               </div>
           `;
