@@ -183,7 +183,7 @@ Standalone question:`
                 }
             });
             let context = results.join('\n');
-            // console.log("CONTEXT : ", context);
+            console.log("CONTEXT : ", context);
 
 
             
