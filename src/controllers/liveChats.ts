@@ -248,7 +248,7 @@ export const sendReplyLiveChats = async (req: Request, res: Response, next: Next
 
 export const closeLiveChats = async (req: Request, res: Response, next: NextFunction) => {
 
-  let message_id = req.body.message_id;
+  let message_id = req.body.chatId;
 
   await ChatHeader.update(
     { status: "closed" },

@@ -794,7 +794,7 @@ document
 
             // Append the response to the response div
 
-            checkForAgent();
+            // checkForAgent();
             // Hide typing animation
             // hideTypingAnimation();
 
