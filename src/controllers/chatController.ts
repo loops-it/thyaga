@@ -84,7 +84,7 @@ export const chatResponse = async (req: RequestWithChatId, res: Response) => {
         }
 
         // console.log("userQuestion",userQuestion);
-        // console.log("translatedQuestion",translatedQuestion);
+        console.log("translatedQuestion",translatedQuestion);
         async function translateToEnglish(userQuestion: string) {
             const [translationsToEng] = await translate.translate(userQuestion, 'en');
             const finalQuestion = Array.isArray(translationsToEng) ? translationsToEng.join(', ') : translationsToEng;
