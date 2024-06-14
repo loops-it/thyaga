@@ -30,7 +30,7 @@ export const viewDocuments = async (req: Request, res: Response) => {
 
               const ids = fileIds.map(file => file.file_id);
             console.log(ids);
-            const fetchResult = await index.namespace('thyaga-data').fetch(ids);
+            const fetchResult = await index.namespace('thyaga-data-store').fetch(ids);
                 
 
             // console.log("IDs:", fetchResult.records);
