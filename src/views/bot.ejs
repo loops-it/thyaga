@@ -336,6 +336,11 @@
             margin-bottom: 10px;
         }
 
+        #questionButtons li {
+            color: #595E62;
+            font-size: 12px;
+            margin: 10px 0px 0px 0px;
+        }
 
 
         .chatDetails p {
@@ -431,17 +436,17 @@
 
 
         .btnRatingView {
-      background-color: #fff;
-      border-radius: 5px;
-      border: none;
-      color: #1C73D4;
-      font-weight: 400;
-      font-size: 12px;
-      font-family: "Poppins", sans-serif;
-      padding: 8px;
-      text-align: center;
-      min-width: 80px;
-    }
+            background-color: #fff;
+            border-radius: 5px;
+            border: none;
+            color: #1C73D4;
+            font-weight: 400;
+            font-size: 12px;
+            font-family: "Poppins", sans-serif;
+            padding: 8px;
+            text-align: center;
+            min-width: 80px;
+        }
     </style>
 </head>
 
@@ -507,48 +512,102 @@
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-    crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
-    integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
-    crossorigin="anonymous"></script>
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
+        integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
+        crossorigin="anonymous"></script>
 
     <script>
         var quickQuestions = [];
 <% for (var i = 0; i < questions.length; i++) { %>
-    quickQuestions.push({
-        question: "<%= questions[i].question %>",
-        answer: "<%= questions[i].answer %>"
-    });
+            quickQuestions.push({
+                question: "<%= questions[i].question %>",
+                answer: "<%= questions[i].answer %>"
+            });
 <% } %>
 
-var questionButtonsContainer = document.getElementById("questionButtons");
+            //         console.log("quickQuestions : ", quickQuestions);
 
-quickQuestions.forEach(function (qa) {
-    var button = document.createElement("button");
-    button.classList.add('quickQuestionButton', 'my-1');
-    button.innerHTML = `
-        <span class="d-flex flex-row justify-content-between align-items-center"> 
-          <span>${qa.question}</span> 
-          <i class="bi bi-arrow-right-square-fill"></i>
-        </span>
-    `;
-    button.addEventListener("click", function () {
-        // Add the clicked question as a user message to the chat history
-        // chatHistory.push({ role: 'user', content: qa.question });
+            //     var redeemQuestions = quickQuestions.filter(function (qa) {
+            //         return qa.question === "What is Thyaga?";
+            //     });
+            //     var purchaseQuestions = quickQuestions.filter(function (qa) {
+            //         return qa.question === "How can I purchase the Thyaga voucher?" || qa.question === "Are there any alternative methods for purchasing Thyaga vouchers other than through the website?";
+            //     });
+            //     var merchantsQuestions = quickQuestions.filter(function (qa) {
+            //         return qa.question === "Does Thyaga offer a pick-up option? If yes, where is the pick-up location?" || qa.question === "What are the different ways I can send a Thyaga voucher?";
+            //     });
+            //     console.log("quickQuestions : ", filteredQuestions);
 
-        // Display the user's question
-        appendMessageToResponse('quickQuestion', qa.question);
-        // Display the corresponding answer
-        appendMessageToResponse('quickAnswer', qa.answer);
-    });
-    questionButtonsContainer.appendChild(button);
-});
 
-// quick questions ============================================================
+            //     var questionButtonsContainer = document.getElementById("questionButtons");
+
+            //     quickQuestions.forEach(function (qa) {
+            //         var button = document.createElement("button");
+            //         button.classList.add('quickQuestionButton', 'my-1');
+            //         button.innerHTML = `
+            //     <span class="d-flex flex-row justify-content-between align-items-center"> 
+            //       <span>${qa.question}</span> 
+            //       <i class="bi bi-arrow-right-square-fill"></i>
+            //     </span>
+            // `;
+            //         button.addEventListener("click", function () {
+            //             appendMessageToResponse('quickQuestion', qa.question);
+            //             appendMessageToResponse('quickAnswer', qa.answer);
+            //         });
+            //         questionButtonsContainer.appendChild(button);
+            //     });
+
+            console.log("quickQuestions : ", quickQuestions);
+
+        // Filter the questions into categories
+        var redeemQuestions = quickQuestions.filter(function (qa) {
+            return qa.question === "What is Thyaga?";
+        });
+        var purchaseQuestions = quickQuestions.filter(function (qa) {
+            return qa.question === "How can I purchase the Thyaga voucher?" || qa.question === "Are there any alternative methods for purchasing Thyaga vouchers other than through the website?";
+        });
+        var merchantsQuestions = quickQuestions.filter(function (qa) {
+            return qa.question === "Does Thyaga offer a pick-up option? If yes, where is the pick-up location?" || qa.question === "What are the different ways I can send a Thyaga voucher?";
+        });
+
+        var questionButtonsContainer = document.getElementById("questionButtons");
+
+        // Function to create and append buttons for each category
+        function createCategorySection(title, questions) {
+            var categoryTitle = document.createElement("li");
+            categoryTitle.innerText = title;
+            questionButtonsContainer.appendChild(categoryTitle);
+
+            questions.forEach(function (qa) {
+                var button = document.createElement("button");
+                button.classList.add('quickQuestionButton', 'my-1');
+                button.innerHTML = `
+                <span class="d-flex flex-row justify-content-between align-items-center"> 
+                  <span>${qa.question}</span> 
+                  <i class="bi bi-arrow-right-square-fill"></i>
+                </span>
+            `;
+                button.addEventListener("click", function () {
+                    // Display the user's question
+                    appendMessageToResponse('quickQuestion', qa.question);
+                    // Display the corresponding answer
+                    appendMessageToResponse('quickAnswer', qa.answer);
+                });
+                questionButtonsContainer.appendChild(button);
+            });
+        }
+
+        // Create and append sections for each category
+        createCategorySection("Redeem Questions", redeemQuestions);
+        createCategorySection("Purchase Questions", purchaseQuestions);
+        createCategorySection("Merchants Questions", merchantsQuestions);
+
+        // quick questions ============================================================
 
     </script>
     <script src="../scripts/botscript.js" type="text/javascript"></script>
